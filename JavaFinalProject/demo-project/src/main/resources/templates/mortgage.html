@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mortgage Calculator</title>
+    <link rel="stylesheet" type="text/css" href="/mortgage.css">
+    <script>
+        function calculateMortgage() {
+        var principal = document.getElementById('principal').value;
+        var interestRate = document.getElementById('interestRate').value;
+        var loanTerm = document.getElementById('loanTerm').value;
+        var monthlyInterestRate = interestRate / 100 / 12;
+        var loanTermMonths = loanTerm * 12;
+        var mortgage = (principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths))
+        / (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1);
+
+        var formattedMortgage = mortgage.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        document.getElementById('result').innerText = 'Monthly Mortgage Payment: $ ' + formattedMortgage;
+
+        return false;
+        }
+    </script>
+</head>
+<body>
+    <h1>Mortgage Calculator</h1>
+    <form onsubmit="return calculateMortgage()">
+        <label for="principal">Principal:</label>
+        <input type="number" id="principal" name="principal" required><br><br>
+
+        <label for="interestRate">Interest Rate (%):</label>
+        <input type="number" id="interestRate" name="interestRate" required><br><br>
+
+        <label for="loanTerm">Loan Term (years):</label>
+        <input type="number" id="loanTerm" name="loanTerm" required><br><br>
+
+        <button type="submit">Calculate Mortgage</button>
+    </form>
+
+    <div id="result"></div>
+</body>
+</html>
